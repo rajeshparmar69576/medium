@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "Bundler",
+      "strict": true,
+      "skipLibCheck": true,
+      "lib": ["ESNext", "DOM"], // <-- Added "DOM" for console, fetch, etc.
+      "jsx": "react-jsx",
+      "jsxImportSource": "hono/jsx"
+    },
+    "include": ["src"], // <-- Added to include your source files
+    "exclude": ["node_modules"] // optional: keeps things clean
+  }
+  
