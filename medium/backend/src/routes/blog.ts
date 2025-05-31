@@ -18,18 +18,22 @@ export const blogRouter = new Hono<{
 blogRouter.use('/*', async (c, next) => {
     const header = c.req.header("authorization") || "";
 
+    if (!header || header.startsWith("Bearer ")) {
+        c.status(401)
+        return c.json({ error:"Authorization header missing or malformed"});
+    }
+
     // Bearer token 
     const token = header.split(" ")[1]
 
-    const user = await verify(token, c.env.JWT_SECRET)
-    if (user) {
+    try {
+        const user = await verify(token, c.env.JWT_SECRET);
         c.set("userId", user.id as string);
         await next();
+    } catch (err) {
+        c.status(403);
+        return c.json({ error: "Invalid or expired token" });
     }
-    else {
-        c.status(403)
-        return c.json({error:"You are not logged in"})
-   }
 })
 
 
