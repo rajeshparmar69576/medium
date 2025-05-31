@@ -8,6 +8,7 @@
   "dependencies": {
     "@prisma/client": "^6.8.2",
     "@prisma/extension-accelerate": "^2.0.1",
+    "@rajeshparmar69576/medium-common": "^1.0.0",
     "hono": "^4.7.10",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.8.2"
