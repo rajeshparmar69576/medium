@@ -18,13 +18,13 @@ export const blogRouter = new Hono<{
 blogRouter.use('/*', async (c, next) => {
     const header = c.req.header("authorization") || "";
 
-    if (!header || header.startsWith("Bearer ")) {
+    if (!header) {
         c.status(401)
         return c.json({ error:"Authorization header missing or malformed"});
     }
 
     // Bearer token 
-    const token = header.split(" ")[1]
+    const token = header
 
     try {
         const user = await verify(token, c.env.JWT_SECRET);
@@ -94,30 +94,6 @@ blogRouter.put('/', async (c) => {
    }
 })
 
-blogRouter.get('/', async (c) => {
-    const body = await c.req.json();
-
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate());
-    try {
-        const blog = await prisma.post.findFirst({
-            where: {
-                id:body.id
-            },
-        })
-
-        return c.json({
-            blog
-        })
-    
-    } catch (e) {
-        c.status(411)
-        return c.json({
-            error:"error while fetching blog post"
-        })
-   }
-})
 
 // should add pagination
 blogRouter.get('/bulk', async (c) => {
@@ -138,3 +114,29 @@ blogRouter.get('/bulk', async (c) => {
         })
    }
 })
+
+blogRouter.get('/:id', async (c) => {
+    const id = await c.req.param("id")
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    try {
+        const blog = await prisma.post.findFirst({
+            where: {
+                id:id
+            },
+        })
+
+        return c.json({
+            blog
+        })
+    
+    } catch (e) {
+        c.status(411)
+        return c.json({
+            error:"error while fetching blog post"
+        })
+   }
+})
+
+
