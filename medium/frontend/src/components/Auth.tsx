@@ -19,7 +19,7 @@ const Auth = ({ type }: { type: "signup" | "signin" }) => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`,postInputs);
             const jwt = response.data.jwt;
             localStorage.setItem("token", jwt)
-            navigate('/blog')
+            navigate('/blogs')
         } catch (error:any) {
             alert(type === "signup" ? "Error while signup" : "Error while signin")
             console.log(error.message)
