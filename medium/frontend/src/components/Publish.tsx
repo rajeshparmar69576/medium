@@ -48,7 +48,7 @@ function TextEditor({onChange}:{onChange:(e:ChangeEvent<HTMLTextAreaElement>)=>v
       <div className="flex items-center justify-between border ">
         <div className="my-2 bg-white rounded-b-lg w-full ">
           <label className="sr-only">Publish post</label>
-          <textarea id="editor" rows={8} className="focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 pl-2"  placeholder="Write an article..." required />
+          <textarea id="editor" rows={8} onChange={onChange} className="focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 pl-2"  placeholder="Write an article..." required />
         </div>
       </div>
     </div>
